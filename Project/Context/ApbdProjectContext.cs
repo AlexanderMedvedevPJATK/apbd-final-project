@@ -20,6 +20,7 @@ public partial class ApbdProjectContext : DbContext
     public DbSet<SoftwareSystem> SoftwareSystems { get; set; }
     public DbSet<Discount> Discounts { get; set; }
     public DbSet<Contract> Contracts { get; set; }
+    public DbSet<AppUser> Users { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -135,7 +136,9 @@ public partial class ApbdProjectContext : DbContext
             
             entity.Property(e => e.StartDate).IsRequired();
             entity.Property(e => e.EndDate).IsRequired();
-            entity.Property(e => e.Price).IsRequired();
+            entity.Property(e => e.Price)
+                .IsRequired()
+                .HasPrecision(10, 2);
             entity.Property(e => e.IdSoftwareSystem).IsRequired();
             entity.Property(e => e.SoftwareSystemVersion)
                 .IsRequired()
@@ -143,6 +146,29 @@ public partial class ApbdProjectContext : DbContext
             entity.Property(e => e.Updates)
                 .IsRequired()
                 .HasMaxLength(AppSettings.MaxContractUpdatesLength);
+        });
+        
+        modelBuilder.Entity<AppUser> (entity =>
+        {
+            entity.HasKey(e => e.Login);
+
+            entity.Property(e => e.Password).IsRequired();
+
+            entity.Property(e => e.Roles).IsRequired();
+        });
+        
+        modelBuilder.Entity<AppUser>().HasData(new List<AppUser>
+        {
+            new AppUser() {
+                Login = "Employee",
+                Password = "12345",
+                Roles = "Employee"
+            },
+            new AppUser() {
+                Login = "Admin",
+                Password = "qwerty",
+                Roles = "Admin,Employee"
+            }
         });
     }
 }

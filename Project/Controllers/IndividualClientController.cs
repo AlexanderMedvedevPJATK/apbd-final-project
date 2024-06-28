@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.DTOs;
 using Project.Services;
@@ -5,6 +6,7 @@ using Project.Services.Abstraction;
 
 namespace Project.Controllers
 {
+    [Authorize(Roles = "Employee")]
     [Route("api/[controller]")]
     [ApiController]
     public class IndividualClientController : ControllerBase
@@ -23,6 +25,7 @@ namespace Project.Controllers
             return Created("api/individualClients", client);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateIndividualClient(int id, UpdateIndividualClientDto clientDto)
         {
@@ -30,6 +33,7 @@ namespace Project.Controllers
             return Ok(client);
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIndividualClient(int id)
         {

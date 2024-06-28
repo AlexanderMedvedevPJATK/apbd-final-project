@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Project.Context;
 using Project.Models;
 using Project.Repositories.Abstraction;
@@ -14,6 +15,16 @@ public class ContractRepository : IContractRepository
         _context = context;
     }
 
+    public async Task<ICollection<Contract>> GetAllContractsAsync()
+    {
+        return await _context.Contracts.ToListAsync();
+    }
+
+    public async Task<ICollection<Contract>> GetAllContractsForSoftwareAsync(int softwareId)
+    {
+        return await _context.Contracts.Where(c => c.IdSoftwareSystem == softwareId).ToListAsync(); 
+    }
+
     public async Task<Contract?> FindByIdAsync(int id)
     {
         return await _context.Contracts.FindAsync(id);
@@ -25,7 +36,7 @@ public class ContractRepository : IContractRepository
         await _context.SaveChangesAsync(); 
     }
 
-    public async Task PayForContract(Contract contract, double amount)
+    public async Task PayForContractAsync(Contract contract, double amount)
     {
         contract.Paid += amount;
         await _context.SaveChangesAsync();

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project.DTOs;
@@ -5,6 +6,7 @@ using Project.Services.Abstraction;
 
 namespace Project.Controllers
 {
+    [Authorize(Roles = "Employee")]
     [Route("api/[controller]")]
     [ApiController]
     public class ContractController : ControllerBase

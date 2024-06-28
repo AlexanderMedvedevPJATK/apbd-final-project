@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Project.Context;
@@ -7,6 +8,7 @@ using Project.Services;
 
 namespace Project.Controllers
 {
+    [Authorize(Roles = "Employee")] 
     [Route("api/[controller]")]
     [ApiController]
     public class CompanyClientController : ControllerBase
@@ -26,6 +28,7 @@ namespace Project.Controllers
             return Created("api/companyClients", client);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateCompanyClient(int id, UpdateCompanyClientDto clientDto)
         {

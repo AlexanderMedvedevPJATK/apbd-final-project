@@ -1,3 +1,4 @@
+using System.Globalization;
 using Project.Exceptions;
 using Project.Repositories.Abstraction;
 using Project.Services.Abstraction;
@@ -36,6 +37,12 @@ public class PaymentService : IPaymentService
             throw new InvalidPaymentAmountException("Payment amount too high");
         }
         
-        await _contractRepository.PayForContract(contract, amount);
+        var parts = amount.ToString(new CultureInfo("en-US")).Split('.');
+        if (parts.Length == 2 && parts[1].Length > 2)
+        {
+            throw new InvalidPaymentAmountException("Payment amount must have at most 2 decimal places");
+        }
+        
+        await _contractRepository.PayForContractAsync(contract, amount);
     }
 }

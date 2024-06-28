@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.IdentityModel.Tokens;
 using Project.Config;
 using Project.DTOs;
@@ -65,6 +66,12 @@ public class ContractService : IContractService
             throw new InvalidDateRangeException("Contract duration must be at most 30 days");
         }
         
+        var parts = contractDto.BasePrice.ToString(new CultureInfo("en-US")).Split('.');
+        if (parts.Length == 2 && parts[1].Length > 2)
+        {
+            throw new InvalidPriceException("Price must have at most 2 decimal places");
+        }
+        
         if (contractDto.BasePrice < 0)
         {
             throw new InvalidPriceException("Base price must be a positive number");
@@ -99,7 +106,7 @@ public class ContractService : IContractService
         {
             SoftwareSystem = software,
             Client = client,
-            Price = contractDto.BasePrice,
+            Price = Math.Floor(contractDto.BasePrice * 100) / 100,
             StartDate = contractDto.StartDate,
             EndDate = contractDto.EndDate,
             DurationInYears = contractDto.DurationInYears,
