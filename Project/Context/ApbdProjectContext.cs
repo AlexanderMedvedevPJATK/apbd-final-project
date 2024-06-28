@@ -146,6 +146,8 @@ public partial class ApbdProjectContext : DbContext
             entity.Property(e => e.Updates)
                 .IsRequired()
                 .HasMaxLength(AppSettings.MaxContractUpdatesLength);
+            entity.Property(e => e.IdClient)
+                .IsRequired();
         });
         
         modelBuilder.Entity<AppUser> (entity =>
@@ -156,6 +158,77 @@ public partial class ApbdProjectContext : DbContext
 
             entity.Property(e => e.Roles).IsRequired();
         });
+        
+        modelBuilder.Entity<IndividualClient>().HasData(new List<IndividualClient>
+        {
+            new IndividualClient() {
+                IdClient = 1,
+                Address = "TestAddress",
+                Email = "test@gmail.com",
+                PhoneNumber = "123456789",
+                FirstName = "TestFirstName",
+                LastName = "TestLastName",
+                Pesel = "12345678901"
+            }
+        });
+        modelBuilder.Entity<CompanyClient>().HasData(new List<CompanyClient>
+        {
+            new CompanyClient() {
+                IdClient = 2,
+                Address = "TestAddress",
+                Email = "test@gmail.com",
+                PhoneNumber = "123456789",
+                CompanyName = "TestCompanyName",
+                KrsNumber = "1234567890"
+            }
+        });
+        
+        modelBuilder.Entity<SoftwareSystem>().HasData(new List<SoftwareSystem>
+        {
+            new SoftwareSystem() {
+                Id = 1,
+                Name = "TestName",
+                Description = "TestDescription",
+                Version = "1.0",
+                Category = "TestCategory",
+                YearlyPrice = 100
+            },
+            new SoftwareSystem() {
+                Id = 2,
+                Name = "TestName2",
+                Description = "TestDescription2",
+                Version = "2.0",
+                Category = "TestCategory2",
+                YearlyPrice = 200,
+                Discounts = new List<Discount>()
+            }
+        });
+        
+        modelBuilder.Entity<Contract>().HasData(new List<Contract>
+        {
+            new Contract() {
+                IdContract = 1,
+                IdClient = 1,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(10),
+                PreviousClientDiscount = true,
+                Price = 100,
+                IdSoftwareSystem = 1,
+                SoftwareSystemVersion = "1.0",
+                Updates = "TestUpdates"
+            },
+            new Contract() {
+                IdContract = 2,
+                IdClient = 2,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddDays(10),
+                Price = 200,
+                IdSoftwareSystem = 2,
+                SoftwareSystemVersion = "2.0",
+                Updates = "TestUpdates2"
+            }
+        });
+        
         
         modelBuilder.Entity<AppUser>().HasData(new List<AppUser>
         {
