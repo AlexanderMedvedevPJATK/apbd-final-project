@@ -43,7 +43,7 @@ public class CompanyClientsService : ICompanyClientsService
         if (clientDto.PhoneNumber != null) client.PhoneNumber = clientDto.PhoneNumber;
         if (clientDto.Email != null) client.Email = clientDto.Email;
         if (clientDto.Address != null) client.Address = clientDto.Address;
-        if (clientDto.CompanyName != null) client.KrsNumber = clientDto.CompanyName;
+        if (clientDto.CompanyName != null) client.CompanyName = clientDto.CompanyName;
 
         await _companyClientsRepository.UpdateAsync(client);
 
