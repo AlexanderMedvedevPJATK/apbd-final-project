@@ -7,33 +7,33 @@ namespace Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IndividualClientsController : ControllerBase
+    public class IndividualClientController : ControllerBase
     {
-        private readonly IIndividualClientsService _individualClientsService;
+        private readonly IIndividualClientService _individualClientService;
 
-        public IndividualClientsController(IIndividualClientsService individualClientsService)
+        public IndividualClientController(IIndividualClientService individualClientService)
         {
-            _individualClientsService = individualClientsService;
+            _individualClientService = individualClientService;
         }
 
         [HttpPost]
         public async Task<IActionResult> AddIndividualClient(AddIndividualClientDto clientDto)
         {
-            var client = await _individualClientsService.AddIndividualClient(clientDto);
+            var client = await _individualClientService.AddIndividualClient(clientDto);
             return Created("api/individualClients", client);
         }
 
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateIndividualClient(int id, UpdateIndividualClientDto clientDto)
         {
-            var client = await _individualClientsService.UpdateIndividualClient(id, clientDto);
+            var client = await _individualClientService.UpdateIndividualClient(id, clientDto);
             return Ok(client);
         }
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteIndividualClient(int id)
         {
-            await _individualClientsService.DeleteIndividualClient(id);
+            await _individualClientService.DeleteIndividualClient(id);
             return NoContent();
         }
     }

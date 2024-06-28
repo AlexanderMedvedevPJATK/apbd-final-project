@@ -9,11 +9,11 @@ namespace Project.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CompanyClientsController : ControllerBase
+    public class CompanyClientController : ControllerBase
     {
         private readonly ICompanyClientsService _companyClientsService;
 
-        public CompanyClientsController(ICompanyClientsService companyClientsService)
+        public CompanyClientController(ICompanyClientsService companyClientsService)
         {
             _companyClientsService = companyClientsService;
         }

@@ -3,7 +3,7 @@ using Project.Models;
 
 namespace Project.Services.Abstraction;
 
-public interface IIndividualClientsService
+public interface IIndividualClientService
 {
     Task<IndividualClient> AddIndividualClient(AddIndividualClientDto clientDto);
     Task<IndividualClient> UpdateIndividualClient(int id, UpdateIndividualClientDto clientDto);

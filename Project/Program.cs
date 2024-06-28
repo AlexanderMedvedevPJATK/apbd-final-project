@@ -18,11 +18,16 @@ builder.Services.AddDbContext<ApbdProjectContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Docker"));
 });
 
-builder.Services.AddScoped<IIndividualClientsService, IndividualClientsService>();
-builder.Services.AddScoped<ICompanyClientsService, CompanyClientsService>();
+builder.Services.AddScoped<IIndividualClientService, IndividualClientService>();
+builder.Services.AddScoped<ICompanyClientsService, CompanyClientService>();
+builder.Services.AddScoped<IContractService, ContractService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 builder.Services.AddScoped<IIndividualClientsRepository, IndividualClientsRepository>();
 builder.Services.AddScoped<ICompanyClientsRepository, CompanyClientsRepository>();
+builder.Services.AddScoped<IContractRepository, ContractRepository>();
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<ISoftwareRepository, SoftwareRepository>();
 
 var app = builder.Build();
 

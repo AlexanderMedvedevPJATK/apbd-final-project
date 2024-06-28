@@ -8,17 +8,17 @@ using Xunit.Abstractions;
 
 namespace MyProject.Tests;
 
-public class IndividualClientsServiceTests
+public class IndividualClientServiceTests
 {
     private readonly ITestOutputHelper _output;
-    private readonly IndividualClientsService _clientService;
+    private readonly IndividualClientService _clientService;
     private readonly Mock<IIndividualClientsRepository> _mockRepository;
 
-    public IndividualClientsServiceTests(ITestOutputHelper output)
+    public IndividualClientServiceTests(ITestOutputHelper output)
     {
         _output = output;
         _mockRepository = new Mock<IIndividualClientsRepository>();
-        _clientService = new IndividualClientsService(_mockRepository.Object);
+        _clientService = new IndividualClientService(_mockRepository.Object);
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public class IndividualClientsServiceTests
             LastName = "Test Last Name",
             Pesel = "12345678901"
         };
-        _mockRepository.Setup(x => x.FindAsync(1)).ReturnsAsync(client);
+        _mockRepository.Setup(x => x.FindByIdAsync(1)).ReturnsAsync(client);
         
         // Act
         await _clientService.UpdateIndividualClient(1, new UpdateIndividualClientDto()
@@ -94,7 +94,7 @@ public class IndividualClientsServiceTests
             LastName = "Test Last Name",
             Pesel = "12345678901"
         };
-        _mockRepository.Setup(x => x.FindAsync(1)).ReturnsAsync(client);
+        _mockRepository.Setup(x => x.FindByIdAsync(1)).ReturnsAsync(client);
         
         // Act
         await _clientService.UpdateIndividualClient(1, new UpdateIndividualClientDto()
@@ -135,7 +135,7 @@ public class IndividualClientsServiceTests
             LastName = "Test Last Name",
             Pesel = "12345678901"
         };
-        _mockRepository.Setup(x => x.FindAsync(1)).ReturnsAsync(client);
+        _mockRepository.Setup(x => x.FindByIdAsync(1)).ReturnsAsync(client);
         
         // Act
         await _clientService.DeleteIndividualClient(1);
@@ -159,7 +159,7 @@ public class IndividualClientsServiceTests
             Pesel = "12345678901",
             IsDeleted = true
         };
-        _mockRepository.Setup(x => x.FindAsync(1)).ReturnsAsync(client);
+        _mockRepository.Setup(x => x.FindByIdAsync(1)).ReturnsAsync(client);
 
         // Act & Assert
         await Assert.ThrowsAsync<DeletedClientException>(() => _clientService.UpdateIndividualClient(1,

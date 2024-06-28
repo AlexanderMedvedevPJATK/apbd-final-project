@@ -7,17 +7,17 @@ using Xunit.Abstractions;
 
 namespace MyProject.Tests;
 
-public class CompanyClientsServiceTests
+public class CompanyClientServiceTests
 {
     private readonly ITestOutputHelper _output;
-    private readonly CompanyClientsService _clientService;
+    private readonly CompanyClientService _clientService;
     private readonly Mock<ICompanyClientsRepository> _mockRepository;
 
-    public CompanyClientsServiceTests(ITestOutputHelper output)
+    public CompanyClientServiceTests(ITestOutputHelper output)
     {
         _output = output;
         _mockRepository = new Mock<ICompanyClientsRepository>();
-        _clientService = new CompanyClientsService(_mockRepository.Object);
+        _clientService = new CompanyClientService(_mockRepository.Object);
     }
 
     [Fact]
@@ -58,7 +58,7 @@ public class CompanyClientsServiceTests
             CompanyName = "Test Company",
             KrsNumber = "123456789"
         };
-        _mockRepository.Setup(x => x.FindAsync(1)).ReturnsAsync(client);
+        _mockRepository.Setup(x => x.FindByIdAsync(1)).ReturnsAsync(client);
         
         // Act
         await _clientService.UpdateCompanyClient(1, new UpdateCompanyClientDto()
@@ -90,7 +90,7 @@ public class CompanyClientsServiceTests
             CompanyName = "Test Company",
             KrsNumber = "123456789"
         };
-        _mockRepository.Setup(x => x.FindAsync(1)).ReturnsAsync(client);
+        _mockRepository.Setup(x => x.FindByIdAsync(1)).ReturnsAsync(client);
         
         // Act
         await _clientService.UpdateCompanyClient(1, new UpdateCompanyClientDto()

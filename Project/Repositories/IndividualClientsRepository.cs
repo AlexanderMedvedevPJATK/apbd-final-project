@@ -14,7 +14,7 @@ public class IndividualClientsRepository : IIndividualClientsRepository
         _context = context;
     }
     
-    public async Task<IndividualClient?> FindAsync(int id)
+    public async Task<IndividualClient?> FindByIdAsync(int id)
     {
         return await _context.IndividualClients.FindAsync(id);
     }

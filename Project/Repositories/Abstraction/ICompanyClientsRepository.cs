@@ -5,7 +5,7 @@ namespace Project.Repositories.Abstraction;
 
 public interface ICompanyClientsRepository
 {
-    Task<CompanyClient?> FindAsync(int id);
+    Task<CompanyClient?> FindByIdAsync(int id);
     Task AddAsync(CompanyClient client);      
     Task UpdateAsync(CompanyClient client);
 }

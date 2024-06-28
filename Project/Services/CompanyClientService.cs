@@ -6,12 +6,12 @@ using Project.Repositories.Abstraction;
 
 namespace Project.Services;
 
-public class CompanyClientsService : ICompanyClientsService
+public class CompanyClientService : ICompanyClientsService
 {
     
     private readonly ICompanyClientsRepository _companyClientsRepository;
     
-    public CompanyClientsService(ICompanyClientsRepository companyClientsRepository)
+    public CompanyClientService(ICompanyClientsRepository companyClientsRepository)
     {
         _companyClientsRepository = companyClientsRepository;
     }
@@ -34,7 +34,7 @@ public class CompanyClientsService : ICompanyClientsService
 
     public async Task<CompanyClient> UpdateCompanyClient(int id, UpdateCompanyClientDto clientDto)
     {
-        var client = await _companyClientsRepository.FindAsync(id);
+        var client = await _companyClientsRepository.FindByIdAsync(id);
         if (client == null)
         {
             throw new ClientNotFoundException("Client not found");

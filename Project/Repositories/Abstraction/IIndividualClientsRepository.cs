@@ -6,7 +6,7 @@ namespace Project.Repositories.Abstraction;
 public interface IIndividualClientsRepository
 {
     
-    Task<IndividualClient?> FindAsync(int id);
+    Task<IndividualClient?> FindByIdAsync(int id);
     Task AddAsync(IndividualClient clientDto);
     Task UpdateAsync(IndividualClient clientDto);
     Task DeleteAsync(int id);

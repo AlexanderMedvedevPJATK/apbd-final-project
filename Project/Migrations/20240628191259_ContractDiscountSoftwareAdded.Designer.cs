@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project.Context;
 
@@ -11,9 +12,11 @@ using Project.Context;
 namespace Project.Migrations
 {
     [DbContext(typeof(ApbdProjectContext))]
-    partial class ApbdProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20240628191259_ContractDiscountSoftwareAdded")]
+    partial class ContractDiscountSoftwareAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,7 +70,7 @@ namespace Project.Migrations
 
                     b.HasKey("IdClient");
 
-                    b.ToTable("Clients");
+                    b.ToTable("Client");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Client");
 
@@ -82,26 +85,26 @@ namespace Project.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdContract"));
 
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
                     b.Property<int>("DurationInYears")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdClient")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdSoftwareSystem")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Paid")
-                        .HasColumnType("float");
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("PreviousClientDiscount")
                         .HasColumnType("bit");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
+
+                    b.Property<int>("SoftwareSystemId")
+                        .HasColumnType("int");
 
                     b.Property<string>("SoftwareSystemVersion")
                         .IsRequired()
@@ -118,9 +121,9 @@ namespace Project.Migrations
 
                     b.HasKey("IdContract");
 
-                    b.HasIndex("IdClient");
+                    b.HasIndex("ClientId");
 
-                    b.HasIndex("IdSoftwareSystem");
+                    b.HasIndex("SoftwareSystemId");
 
                     b.ToTable("Contracts");
                 });
@@ -255,13 +258,13 @@ namespace Project.Migrations
                 {
                     b.HasOne("Project.Models.Client", "Client")
                         .WithMany("Contracts")
-                        .HasForeignKey("IdClient")
+                        .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Project.Models.SoftwareSystem", "SoftwareSystem")
                         .WithMany("Contracts")
-                        .HasForeignKey("IdSoftwareSystem")
+                        .HasForeignKey("SoftwareSystemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

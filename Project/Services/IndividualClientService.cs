@@ -7,12 +7,12 @@ using Project.Services.Abstraction;
 
 namespace Project.Services;
 
-public class IndividualClientsService : IIndividualClientsService
+public class IndividualClientService : IIndividualClientService
 {
     
     private readonly IIndividualClientsRepository _individualClientsRepository;
     
-    public IndividualClientsService(IIndividualClientsRepository individualClientsRepository)
+    public IndividualClientService(IIndividualClientsRepository individualClientsRepository)
     {
         _individualClientsRepository = individualClientsRepository;
     }
@@ -36,7 +36,7 @@ public class IndividualClientsService : IIndividualClientsService
 
     public async Task<IndividualClient> UpdateIndividualClient(int id, UpdateIndividualClientDto clientDto)
     {
-        var client = await _individualClientsRepository.FindAsync(id);
+        var client = await _individualClientsRepository.FindByIdAsync(id);
         
         if (client == null)
         {

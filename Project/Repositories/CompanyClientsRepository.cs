@@ -15,7 +15,7 @@ public class CompanyClientsRepository : ICompanyClientsRepository
         _context = context;
     }
     
-    public async Task<CompanyClient?> FindAsync(int id)
+    public async Task<CompanyClient?> FindByIdAsync(int id)
     {
         return await _context.CompanyClients.FindAsync(id);
     }
