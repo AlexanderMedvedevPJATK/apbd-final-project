@@ -5,7 +5,7 @@ using Project.Config;
 
 namespace Project.DTOs;
 
-public class IndividualClientDto
+public class AddIndividualClientDto
 {
     [Required]
     public string Address { get; set; } = null!;

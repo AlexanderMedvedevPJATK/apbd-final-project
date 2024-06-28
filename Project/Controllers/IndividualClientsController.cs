@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Project.Context;
 using Project.DTOs;
-using Project.Models;
+using Project.Services;
+using Project.Services.Abstraction;
 
 namespace Project.Controllers
 {
@@ -10,31 +9,32 @@ namespace Project.Controllers
     [ApiController]
     public class IndividualClientsController : ControllerBase
     {
-        private readonly ApbdProjectContext _context;
+        private readonly IIndividualClientsService _individualClientsService;
 
-        public IndividualClientsController(ApbdProjectContext context)
+        public IndividualClientsController(IIndividualClientsService individualClientsService)
         {
-            _context = context;
+            _individualClientsService = individualClientsService;
         }
 
         [HttpPost]
-        public IActionResult AddIndividualClient(IndividualClientDto clientDto)
+        public async Task<IActionResult> AddIndividualClient(AddIndividualClientDto clientDto)
         {
-         
-            return Ok();
+            var client = await _individualClientsService.AddIndividualClient(clientDto);
+            return Created("api/individualClients", client);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateIndividualClient(int id, IndividualClientDto clientDto)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateIndividualClient(int id, UpdateIndividualClientDto clientDto)
         {
-            
-            return Ok();
+            var client = await _individualClientsService.UpdateIndividualClient(id, clientDto);
+            return Ok(client);
         }
         
         [HttpDelete("{id}")]
-        public IActionResult DeleteIndividualClient(int id)
+        public async Task<IActionResult> DeleteIndividualClient(int id)
         {
-            return Ok();
+            await _individualClientsService.DeleteIndividualClient(id);
+            return NoContent();
         }
     }
 }

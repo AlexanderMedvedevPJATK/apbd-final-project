@@ -3,7 +3,7 @@ using Project.Config;
 
 namespace Project.DTOs;
 
-public class CompanyClientDto
+public class AddCompanyClientDto
 {
     [Required]
     public string Address { get; set; } = null!;

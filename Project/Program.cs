@@ -1,6 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Project.Context;
+using Project.Middlewares;
+using Project.Repositories;
+using Project.Repositories.Abstraction;
 using Project.Services;
+using Project.Services.Abstraction;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +17,12 @@ builder.Services.AddDbContext<ApbdProjectContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("Docker"));
 });
-builder.Services.AddScoped<IDbService, DbService>();
+
+builder.Services.AddScoped<IIndividualClientsService, IndividualClientsService>();
+builder.Services.AddScoped<ICompanyClientsService, CompanyClientsService>();
+
+builder.Services.AddScoped<IIndividualClientsRepository, IndividualClientsRepository>();
+builder.Services.AddScoped<ICompanyClientsRepository, CompanyClientsRepository>();
 
 var app = builder.Build();
 
@@ -25,5 +34,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.MapControllers();
+    
 
 app.Run();

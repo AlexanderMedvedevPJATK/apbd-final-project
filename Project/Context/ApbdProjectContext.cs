@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Project.Config;
 using Project.Models;
 
 namespace Project.Context;
@@ -23,20 +24,55 @@ public partial class ApbdProjectContext : DbContext
         modelBuilder.Entity<CompanyClient>(entity =>
         {
             entity.HasKey(e => e.IdClient);
-            entity.Property(e => e.CompanyName).IsRequired();
-            entity.Property(e => e.CompanyName).HasMaxLength(100);
-            entity.Property(e => e.Krs).IsRequired();
+            
+            entity.Property(e => e.Address)
+                .IsRequired()
+                .HasMaxLength(AppSettings.MaxAddressLength);
+            
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(AppSettings.MaxEmailLength);
+            
+            entity.Property(e => e.PhoneNumber)
+                .IsRequired()
+                .HasMaxLength(AppSettings.MaxPhoneNumberLength);
+            
+            entity.Property(e => e.CompanyName)
+                .IsRequired()
+                .HasMaxLength(AppSettings.MaxCompanyNameLength);
+            
+            entity.Property(e => e.KrsNumber)
+                .IsRequired()
+                .HasMaxLength(AppSettings.KrsLength);
         });
         
         modelBuilder.Entity<IndividualClient>(entity =>
         {
             entity.HasKey(e => e.IdClient);
-            entity.Property(e => e.FirstName).IsRequired();
-            entity.Property(e => e.FirstName).HasMaxLength(32);
-            entity.Property(e => e.LastName).IsRequired();
-            entity.Property(e => e.LastName).HasMaxLength(32);
-            entity.Property(e => e.Pesel).IsRequired();
-            entity.Property(e => e.Pesel).HasMaxLength(11);
+            
+            entity.Property(e => e.Address)
+                .IsRequired()
+                .HasMaxLength(AppSettings.MaxAddressLength);
+            
+            entity.Property(e => e.Email)
+                .IsRequired()
+                .HasMaxLength(AppSettings.MaxEmailLength);
+            
+            entity.Property(e => e.PhoneNumber)
+                .IsRequired()
+                .HasMaxLength(AppSettings.MaxPhoneNumberLength);
+            
+            entity.Property(e => e.FirstName)
+                .IsRequired()
+                .HasMaxLength(AppSettings.MaxFirstNameLength);
+            
+            entity.Property(e => e.LastName)
+                .IsRequired()
+                .HasMaxLength(AppSettings.MaxLastNameLength);
+            
+            entity.Property(e => e.Pesel)
+                .IsRequired()
+                .HasMaxLength(AppSettings.PeselLength);
         });
     }
 }

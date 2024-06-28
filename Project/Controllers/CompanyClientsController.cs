@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Project.Context;
 using Project.DTOs;
 using Project.Models;
+using Project.Services;
 
 namespace Project.Controllers
 {
@@ -10,31 +11,27 @@ namespace Project.Controllers
     [ApiController]
     public class CompanyClientsController : ControllerBase
     {
-        private readonly ApbdProjectContext _context;
+        private readonly ICompanyClientsService _companyClientsService;
 
-        public CompanyClientsController(ApbdProjectContext context)
+        public CompanyClientsController(ICompanyClientsService companyClientsService)
         {
-            _context = context;
+            _companyClientsService = companyClientsService;
         }
 
         [HttpPost]
-        public IActionResult AddCompanyClient(CompanyClientDto clientDto)
+        public async Task<IActionResult> AddCompanyClient(AddCompanyClientDto clientDto)
         {
-         
-            return Ok();
+            Console.WriteLine("AddCompanyClient");
+            var client = await _companyClientsService.AddCompanyClient(clientDto);
+            return Created("api/companyClients", client);
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateCompanyClient(int id, CompanyClientDto clientDto)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateCompanyClient(int id, UpdateCompanyClientDto clientDto)
         {
-            
-            return Ok();
-        }
-        
-        [HttpDelete("{id}")]
-        public IActionResult DeleteCompanyClient(int id)
-        {
-            return Ok();
+            Console.WriteLine("ENTER UpdateCompanyClient");
+            var client = await _companyClientsService.UpdateCompanyClient(id, clientDto);
+            return Ok(client);
         }
     }
 }
